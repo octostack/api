@@ -8,10 +8,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-var (
-	users    map[string][]byte = make(map[string][]byte)
-	idxUsers int               = 0
-)
+var users map[string][]byte = make(map[string][]byte)
 
 func Login(w http.ResponseWriter, r *http.Request) {
 	var u model.User
@@ -46,18 +43,25 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 func Register(w http.ResponseWriter, r *http.Request) {
 	var u model.User
-	err := json.NewDecoder(r.Body).Decode(&u)
-	if err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
 		http.Error(w, "Cannot decode request", http.StatusBadRequest)
 		return
 	}
+
 	if _, found := users[u.Username]; found {
 		http.Error(w, "User already exists", http.StatusBadRequest)
 		return
 	}
-	// If I'm here-> add user and return a token
+
+	var err error
 	value, err := bcrypt.GenerateFromPassword(u.Password, bcrypt.DefaultCost)
+	if err != nil {
+		http.Error(w, "unable to generate from password", http.StatusInternalServerError)
+		return
+	}
+
 	users[u.Username] = value
+
 	token, err := createToken(u.Username)
 	if err != nil {
 		http.Error(w, "Cannot create token", http.StatusInternalServerError)
