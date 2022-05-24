@@ -16,6 +16,9 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 
 FROM alpine
 
+RUN adduser -S -D -H -h /app appuser
+USER appuser
+
 COPY --from=builder /usr/share/zoneinfo /usr/share/zoneinfo
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /go/bin/* /bin/
