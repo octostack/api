@@ -7,12 +7,10 @@ RUN apk add --update --no-cache \
 WORKDIR /src
 
 COPY go.mod* go.sum* ./
-RUN --mount=type=cache,target=/go/pkg/mod go mod download
+RUN go mod download
 
 COPY . .
-RUN --mount=type=cache,target=/go/pkg/mod \
-    --mount=type=cache,target=/root/.cache/go-build \
-  CGO_ENABLED=0 go install ./cmd/...
+RUN CGO_ENABLED=0 go install ./cmd/...
 
 FROM alpine
 
