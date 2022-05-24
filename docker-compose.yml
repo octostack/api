@@ -5,3 +5,13 @@ services:
     build: .
     ports:
       - 8080
+
+  db:
+    image: postgres:latest
+    ports:
+      - 5432
+
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379
