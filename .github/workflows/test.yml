@@ -27,9 +27,17 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
       - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Verify dependencies
+        run: go mod verify
       - name: Build
-        run: |
-          go build -v ./...
-      - name: Run Tests
-        run: |
-          go test -v ./...
+        run: go build -v ./...
+      - name: Run tests
+        run: go test -race -v ./...
