@@ -1,0 +1,11 @@
+name: api
+id: ari:cloud:compass:7e36dbf5-6c09-4568-b014-c28e211d43cc:component/adabac66-d259-4486-9cd4-62cbdef3acb6/c73604e9-6b57-4d32-aaff-eddc0068793b
+description: REST API
+ownerId: ari:cloud:teams::team/47d25eb5-b804-410f-ad01-81c315b0b931
+fields:
+  tier: 1
+links:
+  - name: Service Repository
+    type: REPOSITORY
+    url: https://github.com/octostack/api
+relationships: {}
