@@ -10,4 +10,10 @@ vendor/
 .gcloudignore
 
 # Exclude git history and configuration.
-.gitignore
+.git*
+
+# Exclude artifact types
+**/*.tar.gz
+**/*.tgz
+**/*.iso
+**/*.raw
