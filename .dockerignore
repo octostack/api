@@ -11,6 +11,7 @@ vendor/
 
 # Exclude git history and configuration.
 .git*
+.vscode*
 
 # Exclude artifact types
 **/*.tar.gz
